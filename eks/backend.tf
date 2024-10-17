@@ -1,17 +1,20 @@
 terraform {
+  required_version = "~> 1.9.8"
+  required_providers {
+    aws = {
+      source  = "hashicorp/aws"
+      version = "~> 5.49.0"
+    }
+  }
   backend "s3" {
     bucket         = "my-ews-baket1"
     region         = "us-east-1"
-    key            = "End-to-End-Kubernetes-Three-Tier-DevSecOps-Project/Jenkins-Server-TF/terraform.tfstate"
+    key            = "eks/terraform.tfstate"
     dynamodb_table = "Lock-Files"
     encrypt        = true
   }
-  
-  required_version = ">= 1.0.0"  # Update to ensure compatibility with the AWS provider
-  required_providers {
-    aws = {
-      version = ">= 5.49.0"  # Update to match the AWS provider version you want to use
-      source  = "hashicorp/aws"
-    }
-  }
+}
+
+provider "aws" {
+  region  = var.aws-region
 }
